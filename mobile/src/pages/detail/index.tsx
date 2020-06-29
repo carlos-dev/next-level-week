@@ -38,6 +38,8 @@ const Detail = () => {
   useEffect(() => {
     api.get(`point/${routeParams.point_id}`).then(response => {
       setData(response.data)
+      console.log(response.data);
+      
     })
   }, [])
 
@@ -53,7 +55,7 @@ const Detail = () => {
   }
 
   function handleWhatspp() {
-    Linking.openURL(`whatsa pp://send?phone=${data.point.whatsapp}&text=Tenho interesse sobre coleta de resíduos`)
+    Linking.openURL(`whatsapp://send?phone=${data.point.whatsapp}&text=Tenho interesse sobre coleta de resíduos`)
   }
 
   if (!data.point) {
@@ -77,6 +79,11 @@ const Detail = () => {
         <View style={styles.address}>
           <Text style={styles.addressTitle}>Endereço</Text>
           <Text style={styles.addressContent}>{data.point.city}, {data.point.uf}</Text>
+        </View>
+        
+        <View style={styles.address}>
+          <Text style={styles.addressTitle}>Descrição</Text>
+          <Text style={styles.addressContent}>{data.point.description}</Text>
         </View>
       </View>
       

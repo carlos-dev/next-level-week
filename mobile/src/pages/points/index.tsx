@@ -24,8 +24,8 @@ interface Point {
 }
 
 interface Params {
-  uf: string;
-  city: string
+  selectedUf: string;
+  selectedCity: string
 }
 
 const Points = () => {
@@ -70,11 +70,12 @@ const Points = () => {
   useEffect(() => {
     api.get('points', {
       params: {
-        city: routeParams.city,
-        uf: routeParams.uf,
+        city: routeParams.selectedCity,
+        uf: routeParams.selectedUf,
         items: selectedItems
       }
     }).then(response => {
+      
       setPoints(response.data)
     })    
 
@@ -85,13 +86,14 @@ const Points = () => {
     navigation.goBack()
   }
 
-  function handleNavigateToDetail(id: number) {
+  function handleNavigateToDetail(id: number) {    
     navigation.navigate('Detail', {point_id: id})
   }
 
   function handleSelectItem(id: number) {
     const alreadySelected = selectedItems.findIndex(item => item === id)
-
+    console.log(alreadySelected);
+    
     if (alreadySelected >= 0) {
       const filteredItems = selectedItems.filter(item => item !== id)
 
@@ -119,8 +121,8 @@ const Points = () => {
             initialRegion={{
               latitude: initialPosition[0],
               longitude: initialPosition[1],
-              latitudeDelta: 0.014,
-              longitudeDelta: 0.014
+              latitudeDelta: 0.139,
+              longitudeDelta: 0.139
             }} 
           >
             {points.map(point => (
@@ -134,7 +136,7 @@ const Points = () => {
                 }} 
               >
                 <View style={styles.mapMarkerContainer}>
-                  <Image style={styles.mapMarkerImage} source={{uri: point.image}} />
+                  <Image style={styles.mapMarkerImage} source={{uri: point.image_url}} />
                   <Text style={styles.mapMarkerTitle}>{point.name}</Text>
                 </View>
               </Marker>
